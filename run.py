@@ -2,6 +2,8 @@
 # @Author  : 孙北晨 
 # @Version : V 0.1
 # @Int     :
-from app import app
+from app import create_app
 
-app.run(debug=True)
+if __name__=="__main__":
+    app = create_app()
+    app.run(debug=True)
