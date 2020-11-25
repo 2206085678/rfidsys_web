@@ -1,23 +1,24 @@
-<html>
-  <head>
-    {% if title %}
-    <title>{{title}} - microblog</title>
+<!doctype html>
+<title>{% block title %}{% endblock %} - Flaskr</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+  <h1>rifd仓库管理系统</h1>
+  <ul>
+    {% if g.user %}
+      <li><span>{{ g.user['username'] }}</span>
+      <li><a href="{{ url_for('user.logout') }}">登出</a>
     {% else %}
-    <title>microblog</title>
+      <li><a href="{{ url_for('user.register') }}">注册</a>
+      <li><a href="{{ url_for('user.login') }}">登录</a>
     {% endif %}
-  </head>
-  <body>
-    <div>Microblog: <a href="/index">Home</a></div>
-    <hr>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-    {% for message in messages %}
-        <li>{{ message }} </li>
-    {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
-  </body>
-</html>
+  </ul>
+</nav>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</section>
